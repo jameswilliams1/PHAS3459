@@ -1,13 +1,15 @@
 package module2;
 
 public class Complex {
-  //Defines real (a) and imaginary (b) components of complex number
+  //Represents real (a) and imaginary (b) components of complex number
   double a;
   double b;
+ 
   
-  public Complex(double c, double d) {
-    a = c;
-    b = d;
+  
+  public Complex(double real, double imag) {
+    a = real;
+    b = imag;
   }
   
   public double real() {
@@ -49,8 +51,25 @@ public class Complex {
     double bNorm = b / modulus();
     return new Complex(aNorm, bNorm);
   }
-      
-    }
+  
+  public Complex add(Complex z) {
+    //Adds 2 complex numbers
+    return new Complex(z.a + this.a, z.b + this.b);
+  }
+  
+  public Complex subtract(Complex z) {
+    //Subtracts 2 complex numbers
+    return new Complex(z.a - this.a, z.b - this.b);
+  }
+  
+  public Complex multiply(Complex z) {
+    //Multiplies 2 complex numbers
+    return new Complex(z.a * this.a - z.b * this.b, z.a * this.b + z.b * this.a);
+  }
+  
+ 
+  }
+
 
   
   

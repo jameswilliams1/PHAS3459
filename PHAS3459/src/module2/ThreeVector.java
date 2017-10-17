@@ -1,7 +1,7 @@
 package module2;
 
 public class ThreeVector {
-  //Defines x, y, z components of 3D vector
+  //Represents x, y, z components of 3D vector
   double x;
   double y;
   double z;
