@@ -10,12 +10,8 @@ public class TestThreeVector {
   System.out.println("v1 = "+v1);
   System.out.println("v2 = "+v2);
   System.out.println("v3 = "+v3);
-  System.out.println("Unit vector of v1 = "+v1.unitVector());
-  System.out.println("Unit vector of v2 = "+v1.unitVector());
-  System.out.println("Unit vector of v3 = "+v1.unitVector());
-  
-  
-  
+  System.out.println(ThreeVector.scalarProduct(v1, v2));
+
   
   
   
