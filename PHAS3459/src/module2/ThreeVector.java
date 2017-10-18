@@ -12,16 +12,16 @@ public class ThreeVector {
     z = c;
   }
   
-  public double magnitude() {
+  public static double magnitude(ThreeVector v) {
   //Magnitude = (a.a + b.b + c.c)^0.5 for vector (a, b, c)
-    return Math.sqrt(x*x+y*y+z*z);
+    return Math.sqrt(v.x*v.x+v.y*v.y+v.z*v.z);
   }
   
-  public ThreeVector unitVector() {
+  public static ThreeVector unitVector(ThreeVector v) {
     //Unit vector = (x, y, z) / magnitude
-    double i = x / magnitude();
-    double j = y / magnitude();
-    double k = z / magnitude();
+    double i = v.x / magnitude(v);
+    double j = v.y / magnitude(v);
+    double k = v.z / magnitude(v);
     return new ThreeVector(i, j, k); 
   }
   
@@ -35,22 +35,22 @@ public class ThreeVector {
     return (v.x*w.x + v.y*w.y + v.z*w.z);
   }
   
-  public ThreeVector vectorProduct(ThreeVector v) {
+  public static ThreeVector vectorProduct(ThreeVector v, ThreeVector w) {
     //(a, b, c)X(d. e. f) = ((b.f-c.e), (c.d-a.f), (a.e-b.d))
-    double i = this.y*v.z - this.z*v.y;
-    double j = this.z*v.x - this.x*v.z;
-    double k = this.x*v.y - this.y*v.x;
+    double i = v.y*w.z - v.z*w.y;
+    double j = v.z*w.x - v.x*w.z;
+    double k = v.x*w.y - v.y*w.x;
     return new ThreeVector(i, j, k);
   }
   
-  public ThreeVector add(ThreeVector v) {
+  public static ThreeVector add(ThreeVector v, ThreeVector w) {
     //Sums 2 ThreeVector objects
-    return new ThreeVector(this.x+v.x, this.y+v.y, this.x+v.z);
+    return new ThreeVector(v.x+w.x, v.y+w.y, v.x+w.z);
   }
     
-  public double angle(ThreeVector v) {
+  public static double angle(ThreeVector v, ThreeVector w) {
     //Angle (radians) between vectors u and v = theta = Arccos((u.v)/(|u|.|v|))
-    return Math.acos(this.scalarProduct(v)/(this.magnitude()*v.magnitude()));
+    return Math.acos(scalarProduct(v, w)/(magnitude(v)*magnitude(w)));
   }
   
 
