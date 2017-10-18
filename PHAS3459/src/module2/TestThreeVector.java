@@ -10,7 +10,9 @@ public class TestThreeVector {
   System.out.println("v1 = "+v1);
   System.out.println("v2 = "+v2);
   System.out.println("v3 = "+v3);
+  
   System.out.println(ThreeVector.angle(v1, v2));
+  System.out.println(v1.angleN(v2));
 
   
   

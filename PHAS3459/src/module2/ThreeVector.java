@@ -53,8 +53,26 @@ public class ThreeVector {
     return Math.acos(scalarProduct(v, w)/(magnitude(v)*magnitude(w)));
   }
   
-
-
+  public double scalarProductN(ThreeVector u) {
+    //Non-static version of scalarProduct
+    return scalarProduct(this, u);
+  }
+  
+  public ThreeVector vectorProductN(ThreeVector u) {
+    //Non-static version of vectorProduct
+    return vectorProduct(this, u);
+  }
+  
+  public ThreeVector addN(ThreeVector u) {
+    //Non-static version of add
+    return add(this, u);
+  }
+  
+  public double angleN(ThreeVector u) {
+    //Non-static version of angle
+    return angle(this, u);
+  }
+  
 }
 
 
