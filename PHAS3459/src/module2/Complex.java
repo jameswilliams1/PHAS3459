@@ -2,10 +2,8 @@ package module2;
 
 public class Complex {
   //Represents real (a) and imaginary (b) components of complex number
-  double a;
-  double b;
- 
-  
+  private double a;
+  private double b;
   
   public Complex(double real, double imag) {
     a = real;
@@ -22,13 +20,6 @@ public class Complex {
     return b;
   }
   
-  public String toString() {
-    //converts complex number to string
-    String complexStringPos = Double.toString(a)+" + " + Double.toString(b) + " i";
-    //String complexStringneg = Double.toString(a)+" - " + Double.toString(b) + " i";
-    return complexStringPos;
-    }
-  
   public double modulus() {
     //Returns modulus of complex number z (|z| = (a^2 + b^2)^0.5)
     return Math.sqrt(a*a + b*b);
@@ -41,8 +32,7 @@ public class Complex {
   
   public Complex conjugate(){
     //Returns complex conjuagte z* = a - ib of z = a + ib
-    double bConj = b * -1;
-    return new Complex(a, bConj);
+    return new Complex(this.a, -this.b);
   }
   
   public Complex normalised() {
@@ -51,6 +41,34 @@ public class Complex {
     double bNorm = b / modulus();
     return new Complex(aNorm, bNorm);
   }
+  
+  public boolean equals(Complex c) {
+    //Returns a "True" boolean if current complex number same as argument
+    if(this.a==c.a && this.b==c.b) {
+      return true;
+    }
+    else {
+      return false;
+    }
+    
+  }
+  
+  public String toString() {
+    //converts complex number to string
+    if(b > 0) {
+    String complexStringPos = Double.toString(a)+" - " + Double.toString(b) + " i";
+    return complexStringPos;
+   }
+    else {
+    String complexStringneg = Double.toString(a)+" - " + Double.toString(Math.abs(b)) + " i";
+    return complexStringneg;
+    }
+  }
+  
+ // public Complex setFromModulusAngle(double mag, double ang) {
+    //Sets the real & imaginary components of complex number using modulus & angle
+   // real = 
+  //}
   
   public Complex add(Complex z) {
     //Adds 2 complex numbers
