@@ -1,50 +1,65 @@
 package module2;
 
 public class Complex {
-  //Represents real (a) and imaginary (b) components of complex number
-  private double a;
-  private double b;
+  //Represents real (real) and imaginary (imag) components of complex number
+  private double real;
+  private double imag;
+  
+  public Complex() {
+    this.real = 0.0;
+    this.imag = 0.0;
+  }
   
   public Complex(double real, double imag) {
-    a = real;
-    b = imag;
+    this.real = real;
+    this.imag = imag;
+  }
+  
+  public void setReal(double real) {
+  //Sets reaL component of complex number
+    this.real = real;
+  }
+  
+  public void setImag(double imag) {
+    //Sets imaginary component of complex number
+    this.imag = imag;
   }
   
   public double real() {
-    //returns real (a) part of complex number
-    return a;
+    //returns real component of complex number
+    return this.real;
   }
   
   public double imag() {
-  //returns imaginary (b) part of complex number
-    return b;
+  //returns imaginary component of complex number
+    return this.imag;
   }
   
   public double modulus() {
-    //Returns modulus of complex number z (|z| = (a^2 + b^2)^0.5)
-    return Math.sqrt(a*a + b*b);
+    //Modulus |z| = (a^2 + b^2)^0.5) for z = a + ib
+    return Math.sqrt(Math.pow(this.real, 2) + Math.pow(this.imag, 2));
   }
   
   public double angle() {
-    //Returns arg(z) of complex number z /radians
-    return Math.atan(b / a);
+    //Arg(z) = Arctan(b/a) for z = a + ib
+    return Math.atan(this.imag / this.real);
   }
   
   public Complex conjugate(){
-    //Returns complex conjuagte z* = a - ib of z = a + ib
-    return new Complex(this.a, -this.b);
+    //Returns complex conjuagte z* = a - ib for z = a + ib
+    return new Complex(this.real, -this.imag);
   }
   
   public Complex normalised() {
     //Returns normalised version of z with same argument (|z| = 1)
-    double aNorm = a / modulus();
-    double bNorm = b / modulus();
-    return new Complex(aNorm, bNorm);
+    double realNorm = real / modulus();
+    double imagNorm = imag / modulus();
+    return new Complex(realNorm, imagNorm);
   }
   
   public boolean equals(Complex c) {
     //Returns a "True" boolean if current complex number same as argument
-    if(this.a==c.a && this.b==c.b) {
+    if(this.real==c.real && this.imag==c.imag) {
       return true;
     }
     else {
@@ -55,37 +70,49 @@ public class Complex {
   
   public String toString() {
     //converts complex number to string
-    if(b > 0) {
-    String complexStringPos = Double.toString(a)+" - " + Double.toString(b) + " i";
-    return complexStringPos;
-   }
-    else {
-    String complexStringneg = Double.toString(a)+" - " + Double.toString(Math.abs(b)) + " i";
-    return complexStringneg;
+    String complexString;
+    if(imag >= 0) {
+    complexString = Double.toString(real)+" + " + Double.toString(imag) + " i";
     }
+    else {
+    complexString = Double.toString(real)+" - " + Double.toString(Math.abs(imag)) + " i";
+    }
+    return complexString;
   }
   
- // public Complex setFromModulusAngle(double mag, double ang) {
-    //Sets the real & imaginary components of complex number using modulus & angle
-   // real = 
-  //}
-  
-  public Complex add(Complex z) {
-    //Adds 2 complex numbers
-    return new Complex(z.a + this.a, z.b + this.b);
+  public void setFromModulusAngle(double mag, double ang) {
+    //real = mag*cos(ang) & imag = mag*sin(ang) for complex number z = mag*e^(i*ang)
+   real = mag * Math.cos(ang);
+   imag = mag * Math.sin(ang);
   }
   
-  public Complex subtract(Complex z) {
-    //Subtracts 2 complex numbers
-    return new Complex(z.a - this.a, z.b - this.b);
+  public static Complex add(Complex z1, Complex z2) {
+    //z1 + z2 = Re(z1) + Re(z2) + i(Im(z1) + Im(z2))
+    return new Complex(z1.real + z2.real, z1.imag + z2.imag);
   }
   
-  public Complex multiply(Complex z) {
-    //Multiplies 2 complex numbers
-    return new Complex(z.a * this.a - z.b * this.b, z.a * this.b + z.b * this.a);
+  public static Complex subtract(Complex z1, Complex z2) {
+  //z1 - z2 = Re(z1) - Re(z2) + i(Im(z1) - Im(z2))
+    return new Complex(z1.real - z2.real, z1.imag - z2.imag);
   }
   
- 
+  public static Complex multiply(Complex z1, Complex z2) {
+    //z1 * z2
+    return new Complex(z1.real * z2.real - z1.imag * z2.imag, z1.real * z2.imag + z1.imag * z2.real);
+  }
+  
+  public static Complex divide(Complex z1, Complex z2) {
+    //z1 / z2 = 
+    double numerator = (z1.real * z2.real + z1.imag * z2.imag) / (Math.pow(z2.real, 2) + Math.pow(z2.imag, 2));
+    double denominator = (z1.imag * z2.real - z1.real * z2.imag) / (Math.pow(z2.real, 2) + Math.pow(z2.imag, 2));
+    return new Complex(numerator, denominator);
+  }
+  
+  public static Complex ONE = new Complex(1, 0);
+  public static Complex ZERO = new Complex(0, 0);
+  public static Complex I = new Complex(0, 1);
+  
+  
   }
 
 
