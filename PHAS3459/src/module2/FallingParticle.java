@@ -37,7 +37,7 @@ public class FallingParticle {
   
   public double getV() {
     //Returns current velocity of particle in m/s
-    return this.v;
+    return -this.v;
   }
   
   public double getT() {
