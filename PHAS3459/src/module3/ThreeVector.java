@@ -53,7 +53,10 @@ public class ThreeVector {
     return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2) + Math.pow(this.z, 2));
   }
 
-  public ThreeVector unitVector() {
+  public ThreeVector unitVector() throws Exception {
+    if(equals(ZERO)) {
+      throw new Exception("Cannot find unit vector of zero vector (0, 0, 0)");
+    }
     // Unit vector = (x, y, z) / magnitude
     double i = this.x / this.magnitude();
     double j = this.y / this.magnitude();
@@ -83,7 +86,10 @@ public class ThreeVector {
     return new ThreeVector(v1.x + v2.x, v1.y + v2.y, v1.x + v2.z);
   }
 
-  public static double angle(ThreeVector v1, ThreeVector v2) {
+  public static double angle(ThreeVector v1, ThreeVector v2) throws Exception {
+    if(v1.equals(ZERO) || v2.equals(ZERO)) {
+      throw new Exception("Cannot find angle for zero vector (0, 0, 0)");
+    }
     // Angle (radians) between vectors v1 and v2 = theta =
     // Arccos((v1.v2)/(|v1|.|v2|))
     return Math.acos(scalarProduct(v1, v2) / (v1.magnitude() * v2.magnitude()));
@@ -104,9 +110,24 @@ public class ThreeVector {
     return add(this, v);
   }
 
-  public double angle(ThreeVector v) {
-    // Non-static version of angle
+  public double angle(ThreeVector v) throws Exception {
+    if(v.equals(ZERO)) {
+      throw new Exception("Cannot find angle for zero vector (0, 0, 0)");
+    }
     return angle(this, v);
-  }
+    // Non-static version of angle
 
+    
+  }
+  
+  public boolean equals(ThreeVector v) {
+    // Returns a "True" boolean if current complex number same as argument
+    if (this.x == v.x && this.y == v.y && this.z == v.z) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  
+  public static final ThreeVector ZERO = new ThreeVector(0, 0, 0);
 }

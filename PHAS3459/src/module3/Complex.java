@@ -50,8 +50,11 @@ public class Complex {
     return new Complex(this.real, -this.imag);
   }
 
-  public Complex normalised() {
+  public Complex normalised() throws Exception {
     // Returns normalised version of z with same argument (|z| = 1)
+    if(equals(ZERO)) {
+      throw new Exception("Cannot normalise  0");
+    }
     double realNorm = real / modulus();
     double imagNorm = imag / modulus();
     return new Complex(realNorm, imagNorm);
@@ -64,7 +67,6 @@ public class Complex {
     } else {
       return false;
     }
-
   }
 
   public String toString() {
@@ -100,14 +102,17 @@ public class Complex {
     return new Complex(z1.real * z2.real - z1.imag * z2.imag, z1.real * z2.imag + z1.imag * z2.real);
   }
 
-  public static Complex divide(Complex z1, Complex z2) {
+  public static Complex divide(Complex z1, Complex z2) throws Exception {
+    if(z2.equals(ZERO)) {
+      throw new Exception("Cannot divide by 0");
+    }
     // z1 / z2
     double numerator = (z1.real * z2.real + z1.imag * z2.imag) / (Math.pow(z2.real, 2) + Math.pow(z2.imag, 2));
     double denominator = (z1.imag * z2.real - z1.real * z2.imag) / (Math.pow(z2.real, 2) + Math.pow(z2.imag, 2));
     return new Complex(numerator, denominator);
   }
 
-  public static Complex ONE = new Complex(1, 0);
-  public static Complex ZERO = new Complex(0, 0);
+  public static final Complex ONE = new Complex(1, 0);
+  public static final Complex ZERO = new Complex(0, 0);
   public static Complex I = new Complex(0, 1);
 }
