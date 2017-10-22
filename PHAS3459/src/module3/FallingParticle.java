@@ -15,7 +15,7 @@ public class FallingParticle {
     d = 1.0;
   }
   
-  public FallingParticle(double m, double d){
+  public FallingParticle(double m, double d) {
 
     this.m = m;
     this.d = d;
