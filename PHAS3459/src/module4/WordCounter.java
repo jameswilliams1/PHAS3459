@@ -1,10 +1,8 @@
 package module4;
 
 import java.io.*;
-import java.nio.*;
-import java.net.*;
-
-
+import java.net.URL;
+import java.util.Scanner;
 
 public class WordCounter {
   
@@ -19,14 +17,17 @@ public class WordCounter {
     return new BufferedReader(new FileReader(fileName));
   }
   
-
-
-  
-  
-  
-  
-  
-  
+  public static int countWordsInResource(BufferedReader dataAsBR) throws IOException {
+    int wordCount = 0;
+    Scanner s = new Scanner(dataAsBR);
+    while(s.hasNext()) {
+      wordCount += 1;
+      s.next();
+      
+    }
+    s.close();
+    return wordCount;
+  }
   
   public static void main(String[] args) {
     String line;
@@ -34,13 +35,23 @@ public class WordCounter {
       BufferedReader webBuffer = brFromURL("http://www.hep.ucl.ac.uk/undergrad/3459/data/module4/module4_text.txt");
       while((line = webBuffer.readLine()) != null) {
         System.out.println(line);
-      }
+      } 
     }
     catch (java.io.IOException e) {
-      
+      System.out.println(e);
+    }
+    try {
+      BufferedReader webBuffer = brFromURL("http://www.hep.ucl.ac.uk/undergrad/3459/data/module4/module4_text.txt");
+      System.out.println("Word count is: " + countWordsInResource(webBuffer));
+    }
+    catch (java.io.IOException e) {
+      System.out.println(e);
     }
     
+
     
+    
+
   }
 
 }
