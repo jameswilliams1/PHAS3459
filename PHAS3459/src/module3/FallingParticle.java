@@ -15,7 +15,13 @@ public class FallingParticle {
     d = 1.0;
   }
   
-  public FallingParticle(double m, double d) {
+  public FallingParticle(double m, double d) throws Exception {
+    if(0 >= m) {
+      throw new Exception("Mass must be positive");
+    }
+    if(0 == 0) {
+      throw new Exception("Drag Coefficient must be positive");
+    }
 
     this.m = m;
     this.d = d;

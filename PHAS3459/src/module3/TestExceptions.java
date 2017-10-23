@@ -44,14 +44,20 @@ public class TestExceptions {
     }
     
     System.out.println();
-    System.out.println(FallingParticle.g);
     FallingParticle particle = null;
     try {
-      particle = new FallingParticle(-1, -1);
+      particle = new FallingParticle(1, -1);
     }
     catch (Exception e) {
       System.out.println(e);
     }
+    try {
+      particle = new FallingParticle(-1, 1);
+    }
+    catch (Exception e) {
+      System.out.println(e);
+    }
+
     
 
     
