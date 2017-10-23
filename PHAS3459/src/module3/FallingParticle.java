@@ -13,13 +13,14 @@ public class FallingParticle {
   public FallingParticle() {
     m = 1.0;
     d = 1.0;
+    System.out.println("Defaulted to m = 1.0 kg, d = 1.0 kg/m");
   }
   
   public FallingParticle(double m, double d) throws Exception {
     if(0 >= m) {
       throw new Exception("Mass must be positive");
     }
-    if(0 == 0) {
+    if(0 >= d) {
       throw new Exception("Drag Coefficient must be positive");
     }
 
@@ -27,7 +28,10 @@ public class FallingParticle {
     this.d = d;
   }
   
-  public void setH(double h) {
+  public void setH(double h) throws Exception {
+    if(0 > h) {
+      throw new Exception("Initial height must be positive");
+    }
     //Sets height in m
     this.h = h;
   }
@@ -60,9 +64,11 @@ public class FallingParticle {
   }
   
   public void drop(double deltaT) {
+    //Sets initial position same as initial height
     this.z = this.h;
     //Simulates descent of particle till it reaches bottom (z=0)
     while(z > 0) {
+      //Updates current time
       t += deltaT;
       doTimeStep(deltaT);
     }

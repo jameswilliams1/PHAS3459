@@ -57,7 +57,16 @@ public class TestExceptions {
     catch (Exception e) {
       System.out.println(e);
     }
-
+    //Sets mass/drag to 1.0
+    particle = new FallingParticle();
+    try {
+      particle.setH(-5);
+    }
+    catch (Exception e) {
+      System.out.println(e);
+    }
+    
+    
     
 
     
