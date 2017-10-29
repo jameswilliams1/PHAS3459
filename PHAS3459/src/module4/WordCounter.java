@@ -38,6 +38,7 @@ public class WordCounter {
   }
 
   public static void main(String[] args) {
+    
     String line;
     try {
       // Creates BufferedReader object from a web page
@@ -46,14 +47,16 @@ public class WordCounter {
       while ((line = webBuffer.readLine()) != null) {
         System.out.println(line);
       }
-    } catch (java.io.IOException e) {
+    } 
+    catch (java.io.IOException e) {
       System.out.println(e);
     }
     try {
-      // Creates BufferedReader object and calls word count function on it
+      // Creates BufferedReader object and calls word count function
       BufferedReader webBuffer = brFromURL("http://www.hep.ucl.ac.uk/undergrad/3459/data/module4/module4_text.txt");
       System.out.println("Word count is: " + countWordsInResource(webBuffer));
-    } catch (java.io.IOException e) {
+    } 
+    catch (java.io.IOException e) {
       System.out.println(e);
     }
 
