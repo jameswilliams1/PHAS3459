@@ -7,16 +7,27 @@ import java.util.Scanner;
 public class NumericalReader {
   /*
    * Defines functions for reading and processing numerical files
-   * 
    */
 
+  private double minValue;
+  private double maxValue;
+  private int nValues;
+  private double sumOfValues;
+  public String fileLoc = "";
+
   public static String getStringFromKeyboard() throws IOException {
-    // Prompts user to enter string & returns keyboard input through BufferedReader
-    System.out.println("Please enter a string:");
+    // Prompts user to enter filepath & returns keyboard input through BufferedReader
+    System.out.println("Enter save location:");
     InputStreamReader is = new InputStreamReader(System.in);
     BufferedReader br = new BufferedReader(is);
     String s = br.readLine();
-    return s;
+    if(s.length()!=0) {
+      return s;
+    }
+    else {
+      System.out.println("User home directory has been selected.");
+      return System.getProperty("user.home"); //Uses home directory if no input
+    }
   }
 
   public BufferedReader brFromURL(String urlName) throws IOException {
@@ -27,26 +38,87 @@ public class NumericalReader {
     return new BufferedReader(isr);
   }
 
+  public void analysisStart(String filePath) throws IOException {
+    // Creates file in specified path
+    File outputfile = new File(filePath);
+    FileWriter fw = new FileWriter(outputfile);
+    fw.close();
+  }
+  
+  public void analyseData(String line) throws IOException {
+    Scanner s = new Scanner(line);
+    BufferedWriter bw = new BufferedWriter(new FileWriter(this.fileLoc, true));
+    // 
+    while (s.hasNext()) {
+      if(s.hasNextDouble()) {
+        Double number = s.nextDouble();
+        System.out.println(number);
+        String numberAsString = Double.toString(number);
+        bw.write(numberAsString);
+        bw.newLine();
+        
+        this.minValue = number;
+        
+        this.minValue = number;
+      }
+      else if(s.hasNextInt()) {
+        System.out.println(s.nextInt());
+        //bw.write(s.nextInt());
+      }
+      else {
+        s.nextLine();
+      }
+    }
+    s.close();
+    bw.close();
+  }
+
   public static void main(String[] args) {
 
-    NumericalReader numReader = new NumericalReader();
-    String line;
+    NumericalReader nr1 = new NumericalReader();
+    NumericalReader nr2 = new NumericalReader();
+    String line = "";
+    String saveDir = "";
 
     try {
-      String webPage = getStringFromKeyboard();
-      System.out.println(webPage);
-     
-      BufferedReader webBuffer = numReader.brFromURL(webPage);
-      // Prints each line until readLine returns a null (empty) line
-      while ((line = webBuffer.readLine()) != null) {
-        System.out.println(line);
+      saveDir = NumericalReader.getStringFromKeyboard();
+    } 
+    catch (java.io.IOException e) {
+      System.out.println(e);
     }
+    try {
+      nr1.fileLoc = (saveDir + File.separator + "numbers1.txt");
+      System.out.println("Saving to " + nr1.fileLoc);
+      nr1.analysisStart(nr1.fileLoc);
+      
+      // Creates BufferedReader object from a web page
+      BufferedReader webBuffer1 = nr1.brFromURL("http://www.hep.ucl.ac.uk/undergrad/3459/data/module4/module4_data1.txt");
+      // Prints each number until readLine returns a null (empty) line
+      while ((line = webBuffer1.readLine()) != null) {
+        nr1.analyseData(line);
+      }
+    }
+    catch (java.io.IOException e) {
+      System.out.println(e);
+    }
+    try {
+      nr2.fileLoc = (saveDir + File.separator + "numbers2.txt");
+      System.out.println("Saving to " + nr2.fileLoc);
+      nr2.analysisStart(nr2.fileLoc);
+      
+      // Creates BufferedReader object from a web page
+      BufferedReader webBuffer2 = nr2.brFromURL("http://www.hep.ucl.ac.uk/undergrad/3459/data/module4/module4_data2.txt");
+      // Prints each number until readLine returns a null (empty) line
+      while ((line = webBuffer2.readLine()) != null) {
+        nr2.analyseData(line);
+      }
     }
     catch (java.io.IOException e) {
       System.out.println(e);
     }
 
-  
-
-}
+    
+    
+   
+  }
 }

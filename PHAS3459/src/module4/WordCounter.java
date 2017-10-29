@@ -25,7 +25,6 @@ public class WordCounter {
 
   public static int countWordsInResource(BufferedReader dataAsBR) throws IOException {
     int wordCount = 0;
-    // Creates new scanner object
     Scanner s = new Scanner(dataAsBR);
     // Adds to word count while there is another token then moves to next token
     while (s.hasNext()) {
