@@ -9,25 +9,26 @@ public class NumericalReader {
    * Defines functions for reading and processing numerical files on the web
    */
 
-  private double minValue = 999999999999999.0;
+  private double minValue = 999999999999999.0; // Sets min & max to extreme values
   private double maxValue = -999999999999999.0;
   private int nValues = 0;
   private double sumOfValues = 0.0;
   public String fileLoc = "";
 
   public static String getStringFromKeyboard() throws IOException {
-    // Prompts user to enter filepath & returns keyboard input through
+    // Prompts user to enter a save directory & returns keyboard input through
     // BufferedReader
     System.out.println("Enter save directory:");
     InputStreamReader is = new InputStreamReader(System.in);
     BufferedReader br = new BufferedReader(is);
     String s = br.readLine();
+    // Uses user home directory if no input
     if (s.length() != 0) {
       return s;
     } else {
       System.out.println("User home directory has been selected.");
       System.out.println();
-      return System.getProperty("user.home"); // Uses home directory if no input
+      return System.getProperty("user.home");
     }
   }
 
@@ -40,7 +41,7 @@ public class NumericalReader {
   }
 
   public void analysisStart(String dataFile) throws IOException {
-    // Creates file in specified path
+    // Creates new file in specified path
     File outputfile = new File(dataFile);
     FileWriter fw = new FileWriter(outputfile);
     fw.close();
@@ -50,15 +51,29 @@ public class NumericalReader {
     Scanner s = new Scanner(line);
     BufferedWriter bw = new BufferedWriter(new FileWriter(this.fileLoc, true));
 
-    while (s.hasNext()) {
+    while (s.hasNext()) { // Checks for remaining tokens
 
       if (s.hasNextDouble()) {
         Double number = s.nextDouble();
         System.out.println(number);
         String numberAsString = Double.toString(number);
-        bw.write(numberAsString);
+        bw.write(numberAsString); // Writes string representation of double to file
         bw.newLine();
+        this.nValues++; // Updates variables
+        this.sumOfValues += number;
 
+        if (this.minValue > number) { // Updates min/max if a token is less/more than current value
+          this.minValue = number;
+        } else if (this.maxValue < number) {
+          this.maxValue = number;
+        }
+      }
+
+      else if (s.hasNextInt()) { // Works same as for doubles
+        int number = s.nextInt();
+        System.out.println(number);
+        bw.write(number);
+        bw.newLine();
         this.nValues++;
         this.sumOfValues += number;
 
@@ -67,11 +82,7 @@ public class NumericalReader {
         } else if (this.maxValue < number) {
           this.maxValue = number;
         }
-      }
-
-      else if (s.hasNextInt()) {
-        System.out.println(s.nextInt());
-      } else {
+      } else { // Goes to new line for non-numbers
         s.nextLine();
       }
 
@@ -89,7 +100,7 @@ public class NumericalReader {
 
   public static void main(String[] args) {
 
-    NumericalReader nr1 = new NumericalReader();
+    NumericalReader nr1 = new NumericalReader(); // Creates objects holding variables
     NumericalReader nr2 = new NumericalReader();
     String line = "";
     String saveDir = "";
