@@ -8,7 +8,7 @@ public class SquareMatrix {
    */
   
   private double[][] elements;
-  private int length;
+  private int size;
   
   // Creates empty matrix
   public SquareMatrix() {
@@ -21,22 +21,43 @@ public class SquareMatrix {
     }
     else {
       this.elements = elements;
-      this.length = elements.length;
+      this.size = elements.length;
     }
   }
   
   // Returns string representation of matrix
   public String toString() {
     String output =  "";
-    for(int i = 0; i < this.length; i++) {
+    for(int i = 0; i < this.size; i++) {
       output += " | ";
-      for(int j = 0; j < this.length; j++) {
+      for(int j = 0; j < this.size; j++) {
         output += elements[i][j] + " | ";
       }
       output += "\n"; 
       }
     return output;
     }
+  
+  // Returns a size*size unit matrix
+  public static SquareMatrix unitMatrix(int size) throws Exception {
+    if(size != (int) size ) {
+      throw new Exception("Size must be an integer");
+    }
+    double[][] values = new double[size][size];
+    for(int i = 0; i < size; i++) {
+      for(int j = 0; j < size; j++) {
+        values[i][j] = 1;
+      }
+      }
+    return new SquareMatrix(values);
+  }
+  
+  
+  
+  
+  
+  
+  
   }
   
   

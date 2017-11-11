@@ -41,6 +41,7 @@ public class TestSquareMatrix {
     System.out.println(B);
     System.out.println(C);
     System.out.println(D);
+    
 
 
   }
