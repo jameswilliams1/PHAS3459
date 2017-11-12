@@ -5,13 +5,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
 
 public class DataAnalysis {
 
   // Returns ArrayList object from web page input
   public static ArrayList<DataPoint> dataFromURL(String urlName) throws IOException {
-    // Empty ArrayList
+    // Creates empty ArrayList
     ArrayList<DataPoint> al = new ArrayList<DataPoint>();
     URL u = new URL(urlName);
     InputStream is = u.openStream();
@@ -33,6 +33,7 @@ public class DataAnalysis {
       // Creates ArrayList of DataPoint objects (x, y, ey) from webpage
       ArrayList<DataPoint> measurements = dataFromURL(
           "http://www.hep.ucl.ac.uk/undergrad/3459/data/module5/module5-xy.txt");
+      System.out.println(measurements);
     } catch (java.io.IOException e) {
       System.out.println(e);
     }
