@@ -11,7 +11,7 @@ public class DataPoint {
   private final double y; // y measurement
   private final double ey; // Error in y
 
-  public DataPoint() { // Sets all values to 0.0 when no args
+  public DataPoint() { // Sets all values to 0.0 when no arguments
     this.x = 0.0;
     this.y = 0.0;
     this.ey = 0.0;
@@ -57,7 +57,7 @@ public class DataPoint {
     // Creates DataPoint from stored values
     return new DataPoint(x, y, ey);
   }
-  
+
   // Displays DataPoint as String
   public String toString() {
     return "DataPoint [x=" + x + ", y=" + y + ", ey=" + ey + "]";
