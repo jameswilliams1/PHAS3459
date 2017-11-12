@@ -8,21 +8,30 @@ import java.net.URL;
 import java.util.*;
 
 public class DataAnalysis {
-  
-  public ArrayList<Double> dataFromURL(String urlName) throws IOException {
-    // Returns ArrayList object from web page input
+
+  // Returns ArrayList object from web page input
+  public static ArrayList<String> dataFromURL(String urlName) throws IOException {
+    ArrayList<String> al = new ArrayList<String>();
     URL u = new URL(urlName);
     InputStream is = u.openStream();
     InputStreamReader isr = new InputStreamReader(is);
     BufferedReader br = new BufferedReader(isr);
-    ArrayList<Double> al = new ArrayList<Double>();
-    
-    
+    String line;
+    while ((line = br.readLine()) != null) {
+      al.add(line);
+    }
+
     return al;
   }
 
   public static void main(String[] args) {
-    
+    String line = "";
+    try {
+      ArrayList<String> al = dataFromURL("http://www.hep.ucl.ac.uk/undergrad/3459/data/module5/module5-xy.txt");
+      System.out.println(al);
+    } catch (java.io.IOException e) {
+      System.out.println(e);
+    }
 
   }
 

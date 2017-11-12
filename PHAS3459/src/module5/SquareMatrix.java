@@ -11,8 +11,10 @@ public class SquareMatrix {
   private double[][] elements; // Array of elements
   private int size; // Size of matrix
   // Creates empty SquareMatrix
+
   public SquareMatrix() {
   }
+
   // Creates SquareMatrix from an array
   public SquareMatrix(double[][] elements) throws Exception {
     if (elements.length != Array.getLength(elements[0])) {
@@ -22,6 +24,7 @@ public class SquareMatrix {
       this.size = elements.length;
     }
   }
+
   // Returns string representation of matrix
   public String toString() {
     String output = "";
@@ -34,6 +37,7 @@ public class SquareMatrix {
     }
     return output;
   }
+
   // Returns a size*size unit matrix
   public static SquareMatrix unitMatrix(int size) throws Exception {
     if (size != (int) size) {
@@ -47,6 +51,7 @@ public class SquareMatrix {
     }
     return new SquareMatrix(values);
   }
+
   // Returns true if current matrix has same hash code as argument
   @Override
   public int hashCode() {
@@ -56,6 +61,7 @@ public class SquareMatrix {
     result = prime * result + size;
     return result;
   }
+
   // Returns true if current matrix equal to argument
   @Override
   public boolean equals(Object obj) {
@@ -72,6 +78,7 @@ public class SquareMatrix {
       return false;
     return true;
   }
+
   // Adds 2 SquareMatrix objects (sm1+sm2)
   public static SquareMatrix add(SquareMatrix sm1, SquareMatrix sm2) throws Exception {
     if (sm1.size != sm2.size) {
@@ -87,6 +94,7 @@ public class SquareMatrix {
     }
     return new SquareMatrix(result); // Returns new SquareMatrix from result
   }
+
   // Subtracts 2 SquareMatrix objects (sm1-sm2)
   public static SquareMatrix subtract(SquareMatrix sm1, SquareMatrix sm2) throws Exception {
     if (sm1.size != sm2.size) {
@@ -102,6 +110,7 @@ public class SquareMatrix {
     }
     return new SquareMatrix(result); // Returns new SquareMatrix from result
   }
+
   // Multiples 2 matrices (sm1*sm2)
   public static SquareMatrix multiply(SquareMatrix sm1, SquareMatrix sm2) throws Exception {
     if (sm1.size != sm2.size) {
@@ -118,6 +127,7 @@ public class SquareMatrix {
     }
     return new SquareMatrix(result);
   }
+
   // Non-static version of add
   public SquareMatrix add(SquareMatrix other) throws Exception {
     if (this.size != other.size) {
@@ -125,6 +135,7 @@ public class SquareMatrix {
     }
     return add(this, other);
   }
+
   // Non-static version of subtract
   public SquareMatrix subtract(SquareMatrix other) throws Exception {
     if (this.size != other.size) {
@@ -132,6 +143,7 @@ public class SquareMatrix {
     }
     return subtract(this, other);
   }
+
   // Non-static version of multiply
   public SquareMatrix multiply(SquareMatrix other) throws Exception {
     if (this.size != other.size) {
