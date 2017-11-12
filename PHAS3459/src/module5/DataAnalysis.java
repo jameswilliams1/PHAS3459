@@ -10,25 +10,29 @@ import java.util.*;
 public class DataAnalysis {
 
   // Returns ArrayList object from web page input
-  public static ArrayList<String> dataFromURL(String urlName) throws IOException {
-    ArrayList<String> al = new ArrayList<String>();
+  public static ArrayList<DataPoint> dataFromURL(String urlName) throws IOException {
+    // Empty ArrayList
+    ArrayList<DataPoint> al = new ArrayList<DataPoint>();
     URL u = new URL(urlName);
     InputStream is = u.openStream();
     InputStreamReader isr = new InputStreamReader(is);
     BufferedReader br = new BufferedReader(isr);
-    String line;
+    String line = "";
+    // Iterates while next token present
     while ((line = br.readLine()) != null) {
-      al.add(line);
+      // Parses each line into DataPoint object
+      DataPoint dp = DataPoint.parseLine(line);
+      // Adds each DataPoint to ArrayList
+      al.add(dp);
     }
-
     return al;
   }
 
   public static void main(String[] args) {
-    String line = "";
     try {
-      ArrayList<String> al = dataFromURL("http://www.hep.ucl.ac.uk/undergrad/3459/data/module5/module5-xy.txt");
-      System.out.println(al);
+      // Creates ArrayList of DataPoint objects (x, y, ey) from webpage
+      ArrayList<DataPoint> measurements = dataFromURL(
+          "http://www.hep.ucl.ac.uk/undergrad/3459/data/module5/module5-xy.txt");
     } catch (java.io.IOException e) {
       System.out.println(e);
     }

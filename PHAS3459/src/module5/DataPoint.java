@@ -1,5 +1,7 @@
 package module5;
 
+import java.util.Scanner;
+
 public class DataPoint {
   /*
    * Represents results of measurements: x, y & error in y: ey
@@ -35,5 +37,20 @@ public class DataPoint {
   // Gets value of ey
   public double getEy() {
     return this.ey;
+  }
+  
+  // Parses input string line (3 numbers) into DataPoint object containing x, y, ey
+  public static DataPoint parseLine(String line) {
+    Scanner s = new Scanner(line);
+    double x = 0.0;
+    double y = 0.0;
+    double ey = 0.0;
+    while (s.hasNext()) {
+      x = s.nextDouble();
+      y = s.nextDouble();
+      ey = s.nextDouble();
+    }
+    s.close();
+    return new DataPoint(x, y, ey);
   }
 }
