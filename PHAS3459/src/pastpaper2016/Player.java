@@ -61,7 +61,8 @@ public class Player {
   // Parses a tab-separated line of data about player into Player object
   public static Player parseLine(String line) {
     Player p = new Player();
-    Scanner s = new Scanner(line).useDelimiter("\t");
+    Scanner s = new Scanner(line);
+    s.useDelimiter("\t");
     // Iterates while next token present
     while (s.hasNext()) {
       p.playerName = s.next();
