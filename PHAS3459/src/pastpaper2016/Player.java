@@ -58,26 +58,90 @@ public class Player {
     this.onBase = onBase;
   }
 
+  // Methods to get corresponding variables
+  public String getPlayerName() {
+    return this.playerName;
+  }
+
+  public String getTeam() {
+    return this.team;
+  }
+
+  public String getPosition() {
+    return this.position;
+  }
+
+  public int getGames() {
+    return this.games;
+  }
+
+  public int getAtBats() {
+    return this.atBats;
+  }
+
+  public int getRuns() {
+    return this.runs;
+  }
+
+  public int getHits() {
+    return this.hits;
+  }
+
+  public int getDoubles() {
+    return this.doubles;
+  }
+
+  public int getTriples() {
+    return this.triples;
+  }
+
+  public int getHomeRuns() {
+    return this.homeRuns;
+  }
+
+  public int getRunsBattedIn() {
+    return this.runsBattedIn;
+  }
+
+  public double getBattingAverage() {
+    return this.battingAverage;
+  }
+
+  public double getOnBase() {
+    return this.onBase;
+  }
+
+  // Displays Player object as a string
+  @Override
+  public String toString() {
+    return "Player [playerName=" + playerName + ", team=" + team + ", position=" + position + ", games=" + games
+        + ", atBats=" + atBats + ", runs=" + runs + ", hits=" + hits + ", doubles=" + doubles + ", triples=" + triples
+        + ", homeRuns=" + homeRuns + ", runsBattedIn=" + runsBattedIn + ", battingAverage=" + battingAverage
+        + ", onBase=" + onBase + "]";
+  }
+
   // Parses a tab-separated line of data about player into Player object
   public static Player parseLine(String line) {
     Player p = new Player();
     Scanner s = new Scanner(line);
     s.useDelimiter("\t");
     // Iterates while next token present
-    while (s.hasNext()) {
+    if (s.hasNext()) {
       p.playerName = s.next();
       p.team = s.next();
       p.position = s.next();
-      p.games = s.nextInt();
-      p.atBats = s.nextInt();
-      p.runs = s.nextInt();
-      p.hits = s.nextInt();
-      p.doubles = s.nextInt();
-      p.triples = s.nextInt();
-      p.homeRuns = s.nextInt();
-      p.runsBattedIn = s.nextInt();
-      p.battingAverage = s.nextDouble();
-      p.onBase = s.nextDouble();
+      if (s.hasNextInt()) {
+        p.games = s.nextInt();
+        p.atBats = s.nextInt();
+        p.runs = s.nextInt();
+        p.hits = s.nextInt();
+        p.doubles = s.nextInt();
+        p.triples = s.nextInt();
+        p.homeRuns = s.nextInt();
+        p.runsBattedIn = s.nextInt();
+        p.battingAverage = s.nextDouble();
+        p.onBase = s.nextDouble();
+      }
     }
     s.close();
     return p;
