@@ -6,7 +6,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map.Entry;
 
 public class Data {
 
@@ -34,18 +37,60 @@ public class Data {
   }
 
   public static void main(String[] args) {
-    // HashMap<String, Player> players = new HashMap<String, Player>();
-    ArrayList<Player> players = new ArrayList<Player>();
+
+    ArrayList<Player> players = new ArrayList<Player>(); // List of players (unsorted)
 
     try {
       players = dataFromURL("http://www.hep.ucl.ac.uk/undergrad/3459/exam_data/2016-17/MLB2001Hitting.txt");
-      // System.out.println(players.size());
-
     } catch (IOException e) {
       System.out.println(e + " Page does not exist");
     }
-    Iterator<Player> it = players.iterator();
 
+    HashMap<String, ArrayList<Player>> teams = new HashMap<String, ArrayList<Player>>(); // HashMap of ArrayLists of
+    // players sorted by team
+    // Iterates over list of players & sorts into ArrayList objects by team
+    for (Player player : players) {
+      String currentTeam = player.getTeam(); // Gets team of current player
+      ArrayList<Player> currentPlayers = teams.get(currentTeam);
+      if (currentPlayers == null) {
+        teams.put(currentTeam, new ArrayList<Player>()); // Creates team if empty
+      }
+      teams.get(currentTeam).add(player);
+    }
+
+    // Initialises max number of home runs and index of player who scored them
+    int maxRuns = 0;
+    int playerMaxRunsIndex = 0;
+    // Iterates over players ArrayList to get key value associated with maxRuns
+    for ( int i = 0; i < players.size(); i++ ) {
+      if ( maxRuns < players.get(i).getHomeRuns() ) { // Updates maxRuns and playerMaxRunsIndex with highest value
+        maxRuns = players.get(i).getHomeRuns();
+        playerMaxRunsIndex = i;
+      }
+    }
+    System.out.println("Total number of players: " + players.size());
+    System.out.println();
+    System.out.println("Most home runs scored in 2001 was: " + maxRuns);
+    System.out.println("Player details:");
+    System.out.println(players.get(playerMaxRunsIndex));
+    HashMap<String, ArrayList<Player>> tenPlusAtBats = new HashMap<String, ArrayList<Player>>();
+    
+    for(String team: teams.keySet()) { // Iterates over each team in HashMap
+      for(Player player: teams.get(team)) { // Iterates over each player in team
+        ArrayList<Player> currentPlayers = tenPlusAtBats.get(team); // Creates new list of players
+        if (currentPlayers == null) {
+          tenPlusAtBats.put(team, new ArrayList<Player>()); // Creates team if not already present
+        }
+        if ( player.getAtBats() >= 10 ) { // Determines whether player has 10+ atBats
+          tenPlusAtBats.get(team).add(player);
+        }
+      }
+    }
+    System.out.println(tenPlusAtBats);
+  
+  
+  
+  
+  
   }
-
 }

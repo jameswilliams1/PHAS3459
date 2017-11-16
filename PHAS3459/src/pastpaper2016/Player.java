@@ -114,10 +114,10 @@ public class Player {
   // Displays Player object as a string
   @Override
   public String toString() {
-    return "Player [playerName=" + playerName + ", team=" + team + ", position=" + position + ", games=" + games
+    return "playerName=" + playerName + ", team=" + team + ", position=" + position + ", games=" + games
         + ", atBats=" + atBats + ", runs=" + runs + ", hits=" + hits + ", doubles=" + doubles + ", triples=" + triples
         + ", homeRuns=" + homeRuns + ", runsBattedIn=" + runsBattedIn + ", battingAverage=" + battingAverage
-        + ", onBase=" + onBase + "]";
+        + ", onBase=" + onBase;
   }
 
   // Parses a tab-separated line of data about player into Player object
