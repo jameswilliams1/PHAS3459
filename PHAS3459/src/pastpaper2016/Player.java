@@ -146,4 +146,11 @@ public class Player {
     s.close();
     return p;
   }
+  
+  // Finds slugging percentage SLG
+  public static double slugPC(Player p) {
+    double top = (p.hits + (2*p.doubles) + (3*p.triples) + (4*p.homeRuns));
+    double SLG = top/p.atBats;
+    return SLG;
+  }
 }

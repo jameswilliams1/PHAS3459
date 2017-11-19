@@ -86,7 +86,19 @@ public class Data {
         }
       }
     }
-    System.out.println(tenPlusAtBats);
+    System.out.println();
+   for ( String team: tenPlusAtBats.keySet() ) {// Iterates over each team in HashMap
+     int total = tenPlusAtBats.get(team).size(); // Finds size of each teams value array (i.e. total atBats)
+     System.out.println("Total at Bats for " + team + ": " + total);
+     double slugPC = 0.0;
+     for ( Player player: tenPlusAtBats.get(team)) { // Iterates over each player in team
+       if ( Player.slugPC(player) > slugPC ) {
+         slugPC = Player.slugPC(player);
+       }
+     }
+     System.out.println("Highest SLG was: " + slugPC);
+     System.out.println();
+   }
   
   
   
