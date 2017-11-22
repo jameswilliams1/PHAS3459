@@ -47,7 +47,7 @@ public class LabelledDataPoint extends DataPoint {
      }
    }
    s.close();
-   if ( label != null) {
+   if ( label != "") {
      return new LabelledDataPoint(x, y, ey, label);
    }
    // Creates DataPoint from stored values
