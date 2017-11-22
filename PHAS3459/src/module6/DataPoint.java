@@ -2,14 +2,16 @@ package module6;
 
 import java.util.Scanner;
 
+/*
+ * Represents results of measurements: x, y & error in y: ey & includes method
+ * to parse data (as string) into DataPoint object
+ */
+
 public class DataPoint {
-  /*
-   * Represents results of measurements: x, y & error in y: ey & includes method
-   * to parse data (as string) into DataPoint object
-   */
-  private final double x; // x measurement
-  private final double y; // y measurement
-  private final double ey; // Error in y
+
+  protected final double x; // x measurement
+  protected final double y; // y measurement
+  protected final double ey; // Error in y
 
   public DataPoint() { // Sets all values to 0.0 when no arguments
     this.x = 0.0;
@@ -58,6 +60,7 @@ public class DataPoint {
     return new DataPoint(x, y, ey);
   }
 
+  @Override
   // Displays DataPoint as String
   public String toString() {
     return "x = " + x + ", y = " + y + " +- " + ey;
