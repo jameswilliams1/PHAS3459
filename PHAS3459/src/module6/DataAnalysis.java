@@ -4,22 +4,26 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/*
+ * Performs chi^2 test on data from web page using multiple functions and determines which fits best
+ */
+
 public class DataAnalysis {
 
-  // Selects the Theory that gives the best agreement with a given set of
+  // Returns the Theory that gives the best agreement with a given set of
   // DataPoint objects
   private static Theory bestTheory(Collection<DataPoint> data, Collection<Theory> theories,
       GoodnessOfFitCalculator gofCalculator) {
     boolean first = true;
     double bestGoodnessOfFit = 0.0;
     Theory bestTheory = null;
-    for (Theory theory : theories) {
-      double gof = gofCalculator.goodnessOfFit(data, theory);
-      if (first) {
+    for (Theory theory : theories) { // Performs calculation for each Theory
+      double gof = gofCalculator.goodnessOfFit(data, theory); // Finds chi^2
+      if (first) { // Sets bestTheory to current theory if it is the 1st one tested
         bestTheory = theory;
         bestGoodnessOfFit = gof;
         first = false;
-      } else if (gof < bestGoodnessOfFit) {
+      } else if (gof < bestGoodnessOfFit) { // Sets bestTheory to current Theory if it fits better
         bestTheory = theory;
         bestGoodnessOfFit = gof;
       }
@@ -34,6 +38,7 @@ public class DataAnalysis {
     Collection<DataPoint> datapoints = new ArrayList<DataPoint>();
     GoodnessOfFitCalculator gof = new ChiSquared(); // Empty object required for using non-static methods
     Collection<Theory> theories = new ArrayList<Theory>();
+    // Defines 3 theories & adds to list
     Theory x2 = new PowerLawTheory(2);
     Theory x205 = new PowerLawTheory(2.05);
     Theory quadratic = new QuadraticTheory(1, 10, 0);

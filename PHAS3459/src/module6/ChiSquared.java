@@ -3,6 +3,10 @@ package module6;
 import java.util.Collection;
 import java.util.Iterator;
 
+/*
+ * Performs the chi^2 test using data and a theory
+ */
+
 public class ChiSquared implements GoodnessOfFitCalculator {
 
   // Returns chi^2 for ArrayList of DataPoint objects using Theory object
