@@ -7,14 +7,14 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 
-
 /*
  * Tests DataPoint & LabelledDataPoint classes using data from a URL
  */
 
 public class TestDataPoints {
-  
-  // Returns list of DataPoint objects (labelled or unlabelled) from web page input
+
+  // Returns list of DataPoint objects (labelled or unlabelled) from web page
+  // input
   public static ArrayList<DataPoint> dataFromURL(String urlName) throws IOException {
     // Creates empty ArrayList
     ArrayList<DataPoint> al = new ArrayList<DataPoint>();
@@ -32,21 +32,20 @@ public class TestDataPoints {
     }
     return al;
   }
-  
+
   public static void main(String[] args) {
-    
+
     System.out.println("Reading data from http://www.hep.ucl.ac.uk/undergrad/3459/data/module6/module6-data.txt");
     System.out.println();
     try {
       ArrayList<DataPoint> al = dataFromURL("http://www.hep.ucl.ac.uk/undergrad/3459/data/module6/module6-data.txt");
-      for(DataPoint data: al) { // Iterates over list printing each DataPoint/LabelledDataPoint
+      for (DataPoint data : al) { // Iterates over list printing each DataPoint/LabelledDataPoint
         System.out.println(data);
       }
-    }
-    catch (IOException e) {
+    } catch (IOException e) {
       System.out.println(e + " Page does not exist");
     }
-    
+
   }
 
 }
