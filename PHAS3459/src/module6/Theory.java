@@ -5,7 +5,7 @@ package module6;
  */
 
 public interface Theory {
-  
+
   // Returns y from x
   double y(double x);
 

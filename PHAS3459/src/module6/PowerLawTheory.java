@@ -5,9 +5,9 @@ package module6;
  */
 
 public class PowerLawTheory implements Theory {
-  
+
   private double n; // Power to raise x to
-  
+
   // Constructor sets value of n
   public PowerLawTheory(int n) {
     this.n = n;
@@ -24,7 +24,5 @@ public class PowerLawTheory implements Theory {
   public String toString() {
     return "x^" + n;
   }
-  
-  
 
 }
