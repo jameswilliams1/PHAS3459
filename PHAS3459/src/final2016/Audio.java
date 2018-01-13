@@ -28,8 +28,8 @@ public class Audio {
   // returns string representation of Audio object
   @Override
   public String toString() {
-    return "Audio [filename=" + filename + ", instrument=" + instrument + ", f=" + f + ", N=" + N + ", maxA=" + maxA
-        + "]";
+    return "Filename: " + filename + ", " + "Duration: " + this.getT() + " s, " + "Amplitude: " + this.getA() + " dBFS, "
+        + "Instrument: " + instrument;
   }
 
   // create blank Audio object (strings="", numbers=0)
@@ -65,12 +65,12 @@ public class Audio {
   public int getMaxA() {
     return this.maxA;
   }
-  
+
   // gets data points of file
   public ArrayList<Integer> getData() {
     return dataPoints;
   }
-  
+
   // sets sampling frequency in Hz
   public void setF(int f) {
     this.f = f;
@@ -85,11 +85,28 @@ public class Audio {
   public void setMaxA(int maxA) {
     this.maxA = maxA;
   }
+
+  // sets data points of file
+  public void setData(ArrayList<Integer> dataPoints) {
+    this.dataPoints = dataPoints;
+  }
+
+  // returns time of file in s (N/f)
+  public double getT() {
+    return this.N / this.f;
+  }
   
-//sets data points of file
- public void setData(ArrayList<Integer> dataPoints) {
-   this.dataPoints = dataPoints;
- }
+  // returns amplitude of signal A=20log(10)/(arms/amax)
+  public double getA() {
+    double sum = 0.0;
+    for (int datapoint: this.getData()) {
+      double value = Math.pow(datapoint, 2);
+      sum += value;
+    }
+    double rms = Math.sqrt(sum/this.N);
+    double A = 20*Math.log10(rms/this.maxA);
+    return A;
+  }
 
   // parses line of filenames/instrument names separated by whitespace
   public static Audio parseNames(String line) {
@@ -114,7 +131,7 @@ public class Audio {
     String line = "";
     while ((line = br.readLine()) != null) {
       Scanner s = new Scanner(line);
-      while ( s.hasNext()) {
+      while (s.hasNext()) {
         int number = s.nextInt();
         numbers.add(number);
       }
