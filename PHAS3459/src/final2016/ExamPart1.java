@@ -1,6 +1,6 @@
-package Investments;
+package final2016;
 
-public class Data {
+public class ExamPart1 {
 
   public static void main(String[] args) {
 
