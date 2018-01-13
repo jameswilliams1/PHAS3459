@@ -1,5 +1,13 @@
 package final2016;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 /**
  * Represents an audio recording of a musical instrument with methods to
  * calculate time etc.
@@ -15,6 +23,14 @@ public class Audio {
   private int f; // sampling frequency in Hz
   private int N; // total number of samples in recording
   private int maxA; // maximum possible amplitude of signal
+  private ArrayList<Integer> dataPoints;
+
+  // returns string representation of Audio object
+  @Override
+  public String toString() {
+    return "Audio [filename=" + filename + ", instrument=" + instrument + ", f=" + f + ", N=" + N + ", maxA=" + maxA
+        + "]";
+  }
 
   // create blank Audio object (strings="", numbers=0)
   public Audio() {
@@ -49,17 +65,12 @@ public class Audio {
   public int getMaxA() {
     return this.maxA;
   }
-
-  // sets filename
-  public void setFilename(String filename) {
-    this.filename = filename;
+  
+  // gets data points of file
+  public ArrayList<Integer> getData() {
+    return dataPoints;
   }
-
-  // sets name of instrument
-  public void setInstrument(String instrument) {
-    this.instrument = instrument;
-  }
-
+  
   // sets sampling frequency in Hz
   public void setF(int f) {
     this.f = f;
@@ -73,6 +84,43 @@ public class Audio {
   // sets maximum possible amplitude of file
   public void setMaxA(int maxA) {
     this.maxA = maxA;
+  }
+  
+//sets data points of file
+ public void setData(ArrayList<Integer> dataPoints) {
+   this.dataPoints = dataPoints;
+ }
+
+  // parses line of filenames/instrument names separated by whitespace
+  public static Audio parseNames(String line) {
+    Audio a = new Audio();
+    Scanner s = new Scanner(line);
+    // iterates while tokens present
+    if (s.hasNext()) {
+      a.filename = s.next();
+      a.instrument = s.next();
+    }
+    s.close();
+    return a;
+  }
+
+  // parses data file of audio sample into list integers
+  public static ArrayList<Integer> parseData(String urlName) throws IOException {
+    ArrayList<Integer> numbers = new ArrayList<Integer>();
+    URL u = new URL(urlName);
+    InputStream is = u.openStream();
+    InputStreamReader isr = new InputStreamReader(is);
+    BufferedReader br = new BufferedReader(isr);
+    String line = "";
+    while ((line = br.readLine()) != null) {
+      Scanner s = new Scanner(line);
+      while ( s.hasNext()) {
+        int number = s.nextInt();
+        numbers.add(number);
+      }
+      s.close();
+    }
+    return numbers;
   }
 
 }
