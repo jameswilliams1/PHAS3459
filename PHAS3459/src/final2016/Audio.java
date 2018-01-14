@@ -107,6 +107,20 @@ public class Audio {
     double A = 20*Math.log10(rms/this.maxA);
     return A;
   }
+  
+  // finds spectral density of signal for given f
+  public double getSpectralDensity(Audio a, double t, double f ) {
+    long N = a.getN();
+    double sumCos = 0.0;
+    double sumSin = 0.0;
+    double z = 2 * Math.PI * f * t / N;
+    for ( int n = 0; n < N; n++) {
+      sumCos += a.getData().get(n) + Math.cos(z * n);
+      sumSin += a.getData().get(n) + Math.sin(z * n);
+    }
+    double norm = t / Math.pow(N, 2);
+    return norm * (Math.pow(sumCos, 2) + Math.pow(sumSin, 2));
+  }
 
   // parses line of filenames/instrument names separated by whitespace
   public static Audio parseNames(String line) {
