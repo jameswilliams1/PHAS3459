@@ -28,8 +28,8 @@ public class Audio {
   // returns string representation of Audio object
   @Override
   public String toString() {
-    return "Filename: " + filename + ", " + "Duration: " + this.getT() + " s, " + "Amplitude: " + this.getA() + " dBFS, "
-        + "Instrument: " + instrument;
+    return "Filename: " + filename + ", " + "Duration: " + this.getT() + " s, " + "Amplitude: " + this.getA()
+        + " dBFS, " + "Instrument: " + instrument;
   }
 
   // create blank Audio object (strings="", numbers=0)
@@ -95,28 +95,29 @@ public class Audio {
   public double getT() {
     return this.N / this.f;
   }
-  
+
   // returns amplitude of signal A=20log(10)/(arms/amax)
   public double getA() {
     double sum = 0.0;
-    for (int datapoint: this.getData()) {
+    for (int datapoint : this.getData()) {
       double value = Math.pow(datapoint, 2);
       sum += value;
     }
-    double rms = Math.sqrt(sum/this.N);
-    double A = 20*Math.log10(rms/this.maxA);
+    double rms = Math.sqrt(sum / this.N);
+    double A = 20 * Math.log10(rms / this.maxA);
     return A;
   }
-  
+
   // finds spectral density of signal for given f
-  public double getSpectralDensity(Audio a, double t, double f ) {
-    long N = a.getN();
+  public double getSpectralDensity(double f) {
+    long N = this.getN();
+    double t = this.getT();
     double sumCos = 0.0;
     double sumSin = 0.0;
     double z = 2 * Math.PI * f * t / N;
-    for ( int n = 0; n < N; n++) {
-      sumCos += a.getData().get(n) + Math.cos(z * n);
-      sumSin += a.getData().get(n) + Math.sin(z * n);
+    for (int n = 0; n < N; n++) {
+      sumCos += this.getData().get(n) + Math.cos(z * n);
+      sumSin += this.getData().get(n) + Math.sin(z * n);
     }
     double norm = t / Math.pow(N, 2);
     return norm * (Math.pow(sumCos, 2) + Math.pow(sumSin, 2));
