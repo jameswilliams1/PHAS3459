@@ -1,5 +1,10 @@
 package final2015;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -14,10 +19,13 @@ public class Detector {
 
   private String ID; // identifier of the detector
   private double distance; // distance in m from particle beam
-  private ArrayList<HashMap<Integer, Double>> data; // data sets from the experiment (list of HashMap<time, reading>)
-  
+  private ArrayList<HashMap<Integer, Double>> data = new ArrayList<HashMap<Integer, Double>>(); // data sets from the
+                                                                                                // experiment (list of
+                                                                                                // HashMap<time,
+                                                                                                // reading>)
+
   // returns name of detector
-  public String getName() {
+  public String getID() {
     return this.ID;
   }
 
@@ -37,19 +45,66 @@ public class Detector {
     return "Detector [ID: " + ID + ", distance: " + distance + "m, data: " + data + "]";
   }
 
-  // parses line of detector ID / distance from beam & creates new object
-  public static Detector parseID(String line) {
-    Detector d = new Detector();
-    Scanner s = new Scanner(line);
-    if (s.hasNext()) {
-      d.ID = s.next();
-      d.distance = s.nextDouble();
+  // parses line of detector ID / distance from beam & creates list of Detector
+  // objects
+  public static ArrayList<Detector> parseID(String dir) throws IOException {
+    ArrayList<Detector> dets = new ArrayList<Detector>();
+    URL u = new URL(dir + "detectors.txt");
+    InputStream is = u.openStream();
+    InputStreamReader isr = new InputStreamReader(is);
+    BufferedReader br = new BufferedReader(isr);
+    String line = "";
+    while ((line = br.readLine()) != null) {
+      // parses each line into ID / distance
+      Detector d = new Detector();
+      Scanner s = new Scanner(line);
+      if (s.hasNext()) {
+        d.ID = s.next();
+        d.distance = s.nextDouble();
+        // adds to list
+        dets.add(d);
+      }
+      s.close();
+
     }
-    s.close();
-    return d;
+    return dets;
+  }
+
+  // adds data to list of Detector objects
+  public static ArrayList<Detector> addData(ArrayList<Detector> dets, String dir) throws IOException {
+    URL u = new URL(dir + "signals.txt");
+    InputStream is = u.openStream();
+    InputStreamReader isr = new InputStreamReader(is);
+    BufferedReader br = new BufferedReader(isr);
+    String line = "";
+    while ((line = br.readLine()) != null) {
+      HashMap<String, HashMap<Integer, Double>> output = new HashMap<String, HashMap<Integer, Double>>();
+      HashMap<Integer, Double> data = new HashMap<Integer, Double>();
+      Scanner s = new Scanner(line);
+      String name = "";
+      int count = 0;
+      if (s.hasNext()) {
+        name = s.next();
+        while (s.hasNext()) {
+          data.put(count, s.nextDouble());
+          count++;
+        }
+      }
+      s.close();
+      output.put(name, data);
+
+      for (Detector det : dets) {
+        if (output.containsKey(det.getID())) {
+          det.data.add(output.get(det.getID()));
+        }
+      }
+    }
+    return dets;
   }
   
-  //parses line of ID / datapoints
-  public static ArrayList<Double>
+  public static ArrayList<Detector> dataFromURL(String dir) throws IOException {
+    return addData(parseID(dir), dir);
+    
+  }
 
 }
