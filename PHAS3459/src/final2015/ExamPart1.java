@@ -18,9 +18,25 @@ public class ExamPart1 {
     }
 
     for(Detector det:dets) {
-      System.out.println(det);
+      //System.out.println(det);
     }
-
+    int totalPulse = 0;
+    double totalAmp = 0.0;
+    for( Detector det:dets) {
+      totalPulse += det.pulseCount();
+      //totalAmp += det.meanAmplitude();
+    }
+    //double meanAmp = totalAmp / dets.size();
+    System.out.println("Total pulse count: " + totalPulse);
+    System.out.println("Mean amplitude of pulses: ");
+    
+    for(Detector det:dets) {
+      System.out.println("Detector " + det.getID() + ":");
+      System.out.println("Number of signals " + ": " + det.signalCount());
+      System.out.println("Mean amplitude of pulses (this detector); " + det.meanAmplitude());
+      System.out.println("");
+    }
+    
   }
 
 }

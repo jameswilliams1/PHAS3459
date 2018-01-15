@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -102,9 +104,39 @@ public class Detector {
     return dets;
   }
   
+  //gets data from 2 urls in dir and combines
   public static ArrayList<Detector> dataFromURL(String dir) throws IOException {
     return addData(parseID(dir), dir);
-    
+  }
+  
+  //finds total pulses of Detector
+  public int pulseCount() {
+    return this.data.size();
+  }
+  
+  public int signalCount() {
+    int count = 0;
+    for ( HashMap<Integer, Double> map:this.data) {
+      count += map.size();
+    }
+    return count;
+  }
+  
+  //finds mean amplitude of pulses from detector
+  public double meanAmplitude() {
+    double total = 0.0;
+    for(HashMap<Integer, Double> map:this.data) {
+      total = 0.0;
+      double max = Double.MIN_VALUE;
+      for( double value: map.values()) {
+        if(value > max) {
+          max = value;
+        }
+      }
+      total += max;
+    }
+    double mean = total / this.pulseCount();
+    return mean;
   }
 
 }
