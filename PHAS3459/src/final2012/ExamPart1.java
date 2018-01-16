@@ -1,6 +1,6 @@
-package module9;
+package final2012;
 
-public class SolarSystem {
+public class ExamPart1 {
 
   public static void main(String[] args) {
 
