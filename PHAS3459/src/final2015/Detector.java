@@ -122,6 +122,21 @@ public class Detector {
     return count;
   }
   
+  //returns list of max amplitudes of each pulse for detector
+  public ArrayList<Double> AmplitudeList() {
+    ArrayList<Double> amps = new ArrayList<Double>();
+    for ( HashMap<Integer, Double> pulse: this.data) {
+      double maxAmp = Double.MIN_VALUE;
+      for( double amp:pulse.values()) {
+        if(amp > maxAmp) {
+          maxAmp = amp;
+        }
+      }
+      amps.add(maxAmp);
+    }
+    return amps;
+  }
+  
   //finds mean amplitude of pulses from detector
   public double meanAmplitude() {
     double total = 0.0;
