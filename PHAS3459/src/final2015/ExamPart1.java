@@ -12,32 +12,32 @@ public class ExamPart1 {
     ArrayList<Detector> dets = new ArrayList<Detector>();
 
     try {
-      dets = Detector.dataFromURL("http://www.hep.ucl.ac.uk/undergrad/3459/exam_data/2015-16/");        
+      dets = Detector.dataFromURL("http://www.hep.ucl.ac.uk/undergrad/3459/exam_data/2015-16/");
     } catch (IOException e) {
       System.out.println(e);
     }
 
-    for(Detector det:dets) {
-      //System.out.println(det);
-    }
-    int totalPulse = 0;
+    int totalPulse = 0; //initialises totals
     double totalAmp = 0.0;
-    for( Detector det:dets) {
+    
+    for( Detector det:dets) { //iterates over each Detector updating totals
       totalPulse += det.pulseCount();
       totalAmp += det.meanAmplitude();
     }
+    
     double meanAmp = totalAmp / dets.size();
-    //System.out.println("Total pulse count: " + totalPulse);
-    //System.out.println("Mean amplitude of pulses: " + meanAmp);
+    System.out.println("Total pulse count: " + totalPulse);
+    System.out.println("Mean amplitude of pulses: " + meanAmp + "V");
+    System.out.println("");
     
     for(Detector det:dets) {
       //System.out.println("Detector " + det.getID() + ":");
       //System.out.println("Number of signals " + ": " + det.signalCount());
-      //System.out.println("Mean amplitude of pulses (this detector); " + det.meanAmplitude());
+      System.out.println("Mean amplitude of pulses for this detector: " + det.meanAmplitude() + "V");
       //System.out.println("");
     }
-    System.out.println("amplitude: " + dets.get(0).AmplitudeList());
-    System.out.println("");
+    //System.out.println("amplitude: " + dets.get(0).meanAmplitude());
+    
   }
 
 }

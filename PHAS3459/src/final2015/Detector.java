@@ -137,21 +137,16 @@ public class Detector {
     return amps;
   }
   
-  //finds mean amplitude of pulses from detector
+  //returns mean amplitude of pulses for detector
   public double meanAmplitude() {
+    ArrayList<Double> amps = this.AmplitudeList();
     double total = 0.0;
-    for(HashMap<Integer, Double> map:this.data) {
-      total = 0.0;
-      double max = Double.MIN_VALUE;
-      for( double value: map.values()) {
-        if(value > max) {
-          max = value;
-        }
-      }
-      total += max;
+    for ( double amp:amps) {
+      total += amp;
     }
-    double mean = total / this.pulseCount();
-    return mean;
+    return total / this.pulseCount();
   }
+  
+  
 
 }
