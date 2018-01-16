@@ -26,17 +26,17 @@ public class ExamPart1 {
     }
     
     double meanAmp = totalAmp / dets.size();
-    System.out.println("Total pulse count: " + totalPulse);
-    System.out.println("Mean amplitude of pulses: " + meanAmp + "V");
-    System.out.println("");
+    //System.out.println("Total pulse count: " + totalPulse);
+    //System.out.println("Mean amplitude of pulses: " + meanAmp + "V");
+    //System.out.println("");
     
     for(Detector det:dets) {
-      //System.out.println("Detector " + det.getID() + ":");
+      System.out.println("Detector " + det.getID() + ":");
       //System.out.println("Number of signals " + ": " + det.signalCount());
-      System.out.println("Mean amplitude of pulses for this detector: " + det.meanAmplitude() + "V");
-      //System.out.println("");
+      //System.out.println("Mean amplitude of pulses for this detector: " + det.meanAmplitude() + "V");
+      System.out.println("Mean arrival time of particles for this detector: " + det.meanT() + "ns");
+      System.out.println();
     }
-    //System.out.println("amplitude: " + dets.get(0).meanAmplitude());
     
   }
 

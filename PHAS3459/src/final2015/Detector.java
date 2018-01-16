@@ -103,32 +103,32 @@ public class Detector {
     }
     return dets;
   }
-  
-  //gets data from 2 urls in dir and combines
+
+  // gets data from 2 urls in dir and combines
   public static ArrayList<Detector> dataFromURL(String dir) throws IOException {
     return addData(parseID(dir), dir);
   }
-  
-  //finds total pulses of Detector
+
+  // finds total pulses of Detector
   public int pulseCount() {
     return this.data.size();
   }
-  
+
   public int signalCount() {
     int count = 0;
-    for ( HashMap<Integer, Double> map:this.data) {
+    for (HashMap<Integer, Double> map : this.data) {
       count += map.size();
     }
     return count;
   }
-  
-  //returns list of max amplitudes of each pulse for detector
+
+  // returns list of max amplitudes of each pulse for detector
   public ArrayList<Double> AmplitudeList() {
     ArrayList<Double> amps = new ArrayList<Double>();
-    for ( HashMap<Integer, Double> pulse: this.data) {
+    for (HashMap<Integer, Double> pulse : this.data) {
       double maxAmp = Double.MIN_VALUE;
-      for( double amp:pulse.values()) {
-        if(amp > maxAmp) {
+      for (double amp : pulse.values()) {
+        if (amp > maxAmp) {
           maxAmp = amp;
         }
       }
@@ -136,17 +136,30 @@ public class Detector {
     }
     return amps;
   }
-  
-  //returns mean amplitude of pulses for detector
+
+  // returns mean amplitude of pulses for detector
   public double meanAmplitude() {
     ArrayList<Double> amps = this.AmplitudeList();
     double total = 0.0;
-    for ( double amp:amps) {
+    for (double amp : amps) {
       total += amp;
     }
     return total / this.pulseCount();
   }
-  
-  
+
+  // returns mean arrival time of pulses for detector
+  public double meanT() {
+    ArrayList<Double> amps = this.AmplitudeList();
+    double totalT = 0;
+    for (int i = 0; i < amps.size(); i++) {
+      double maxAmp = amps.get(i);
+      for (int key : this.data.get(i).keySet()) {
+        if (this.data.get(i).get(key) == maxAmp) {
+          totalT += key;
+        }
+      }
+    }
+    return totalT / this.pulseCount();
+  }
 
 }
