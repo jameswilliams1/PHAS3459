@@ -20,4 +20,12 @@ public class Bin {
     this.count = count;
   }
 
+  /**
+   * Displays Bin as a String
+   */
+  @Override
+  public String toString() {
+    return "Bin [minE=" + minE + ", maxE=" + maxE + ", count=" + count + "]";
+  }
+
 }
