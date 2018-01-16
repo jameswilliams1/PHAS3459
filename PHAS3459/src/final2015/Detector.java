@@ -122,7 +122,7 @@ public class Detector {
     return count;
   }
 
-  // returns list of max amplitudes of each pulse for detector
+  // returns list of max amplitudes of each pulse for detector in V
   public ArrayList<Double> AmplitudeList() {
     ArrayList<Double> amps = new ArrayList<Double>();
     for (HashMap<Integer, Double> pulse : this.data) {
@@ -137,7 +137,7 @@ public class Detector {
     return amps;
   }
 
-  // returns mean amplitude of pulses for detector
+  // returns mean amplitude of pulses for detector in V
   public double meanAmplitude() {
     ArrayList<Double> amps = this.AmplitudeList();
     double total = 0.0;
@@ -147,7 +147,7 @@ public class Detector {
     return total / this.pulseCount();
   }
 
-  // returns mean arrival time of pulses for detector
+  // returns mean arrival time of pulses for detector in ns
   public double meanT() {
     ArrayList<Double> amps = this.AmplitudeList();
     double totalT = 0;
@@ -160,6 +160,11 @@ public class Detector {
       }
     }
     return totalT / this.pulseCount();
+  }
+
+  // returns average speed of particles measured by detector in m/s
+  public double MeanSpeed() {
+    return this.distance / (this.meanT() * Math.pow(10, -9));
   }
 
 }
