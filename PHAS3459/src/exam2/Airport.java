@@ -10,7 +10,7 @@ import java.util.Scanner;
  */
 public class Airport {
 
-	private String code; // aiport code
+	private String code; // airport code
 	private String name; // name of airport
 	private String timeZone; // time zone of airport
 
