@@ -57,26 +57,46 @@ public class Data {
   }
 
   /**
-   * Counts the number of events in a specified range (min-max) for list of Bin
-   * (bins)
+   * Counts the number of expected events in a specified energy range (min-max)
+   * for list of Bin (bins)
    * 
    * @param bins
    * @param min
    * @param max
-   * @return
+   * @return count
    */
-  public static double countEvents(ArrayList<Bin> bins, double min, double max) {
+  public static double countExpectedEvents(ArrayList<Bin> bins, double min, double max) {
     double count = 0.0;
     for (Bin bin : bins) {
       if (bin.inRange(min, max)) {
-        count += bin.getCount();
+        count += bin.getExpectedCount();
       }
     }
     return count;
   }
 
   /**
-   * Returns list  of event energies for a given channel (String)
+   * Counts the number of measured events in a specified energy range (min-max)
+   * for list of Bin (bins)
+   * 
+   * @param bins
+   * @param min
+   * @param max
+   * @return count
+   */
+  public static double countMeasuredEvents(ArrayList<Bin> bins, double min, double max) {
+    double count = 0.0;
+    for (Bin bin : bins) {
+      if (bin.inRange(min, max)) {
+        count += bin.getMeasuredCount();
+      }
+    }
+    return count;
+  }
+
+  /**
+   * Returns list of event energies for a given channel (String)
+   * 
    * @param ID
    * @param url
    * @return
@@ -92,13 +112,13 @@ public class Data {
     br.readLine(); // skips headers (1 line)
     double thisValue = 0.0;
     String thisID = "";
-    while ((line = br.readLine()) != null) { //iterates over each line
+    while ((line = br.readLine()) != null) { // iterates over each line
       Scanner s = new Scanner(line);
-      if ( s.hasNext()) {
-        thisID = s.next(); //updates thisID to next token
-        if ( thisID.equals(ID)) { //checks if thisID is the same as required ID (input)
+      if (s.hasNext()) {
+        thisID = s.next(); // updates thisID to next token
+        if (thisID.equals(ID)) { // checks if thisID is the same as required ID (input)
           thisValue = s.nextDouble();
-          data.add(thisValue); //adds value to list if ID matches
+          data.add(thisValue); // adds value to list if ID matches
         }
       }
       s.close();
@@ -106,12 +126,49 @@ public class Data {
     return data;
   }
 
+  /**
+   * Updates corresponding bin (measured) count +1 for each data point
+   * 
+   * @param data
+   * @param bins
+   */
+  public static void sortData(ArrayList<Double> data, ArrayList<Bin> bins) {
+    for (double point : data) { // iterates over all data points
+      for (Bin bin : bins) { // iterates over all bins
+        if (bin.contains(point)) { // checks if point is in the bounds of the bin
+          bin.updateMeasuredCount();
+        }
+      }
+    }
+  }
+
+  /**
+   * Finds log likelihood of a list of Bins (compares measured to actual counts)
+   * 
+   * @param bins
+   * @return LL (log likelihood)
+   */
+  public static double logLike(ArrayList<Bin> bins) {
+    double LL = 0.0;
+    double log = 0.0;
+    double bracket = 0.0;
+    double sum = 0.0;
+    for (Bin bin : bins) { // iterates over each bin
+      bracket = bin.getExpectedCount() - bin.getMeasuredCount(); // (yi - ni)
+      log = bin.getMeasuredCount() * Math.log(bin.getMeasuredCount() / bin.getExpectedCount()); // ni * ln(ni / yi)
+      sum = bracket + log;
+      LL += (sum); // adds LL value for each bin to total
+    }
+    return LL;
+  }
+
   public static void main(String[] args) {
 
-    ArrayList<Bin> backgroundGG = new ArrayList<Bin>();
+    ArrayList<Bin> backgroundGG = new ArrayList<Bin>(); // initialises all lists (empty)
     ArrayList<Bin> backgroundZZ = new ArrayList<Bin>();
     ArrayList<Double> dataGG = new ArrayList<Double>();
     ArrayList<Double> dataZZ = new ArrayList<Double>();
+
     try {
       backgroundGG = theoryFromURL("http://www.hep.ucl.ac.uk/undergrad/3459/exam-data/2012-13/backgroundGG.txt");
       backgroundZZ = theoryFromURL("http://www.hep.ucl.ac.uk/undergrad/3459/exam-data/2012-13/backgroundZZ.txt");
@@ -120,11 +177,24 @@ public class Data {
     } catch (IOException e) {
       System.out.println(e);
     }
-    //System.out.println("Expected background events between 120-140GeV (GG): " + countEvents(backgroundGG, 120, 140));
-    //System.out.println("Expected background events between 120-140GeV (ZZ): " + countEvents(backgroundZZ, 120, 140));
-    System.out.println(dataGG.size());
-    System.out.println(dataZZ.size());
 
+    sortData(dataGG, backgroundGG);
+    sortData(dataZZ, backgroundZZ);
+
+    System.out.println("For GG channel:");
+    System.out
+        .println("Expected background events in range 120-240GeV (GG): " + countExpectedEvents(backgroundGG, 120, 240));
+    System.out
+        .println("Number of candidate events in range 120-240GeV: " + countMeasuredEvents(backgroundGG, 120, 240));
+    System.out.println("Log likelihood : " + logLike(backgroundGG));
+    System.out.println();
+
+    System.out.println("For ZZ channel:");
+    System.out
+        .println("Expected background events in range 120-240GeV (ZZ): " + countExpectedEvents(backgroundZZ, 120, 240));
+    System.out
+        .println("Number of candidate events in range 120-240GeV: " + countMeasuredEvents(backgroundZZ, 120, 240));
+    System.out.println("Log likelihood : " + logLike(backgroundZZ));
   }
 
 }

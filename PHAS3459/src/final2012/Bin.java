@@ -10,7 +10,8 @@ public class Bin {
 
   private double minE; // bin lower bound
   private double maxE; // bin upper bound
-  private double count; // number of readings in bin
+  private double expectedCount; // expected number of readings in bin
+  private double measuredCount = 0.0; // measured number of readings in bin
 
   public double getMinE() {
     return this.minE;
@@ -20,14 +21,22 @@ public class Bin {
     return this.maxE;
   }
 
-  public double getCount() {
-    return this.count;
+  public double getExpectedCount() {
+    return this.expectedCount;
+  }
+
+  public double getMeasuredCount() {
+    return this.measuredCount;
+  }
+
+  public void updateMeasuredCount() {
+    this.measuredCount += 1.0;
   }
 
   public Bin(double minE, double maxE, double count) {
     this.minE = minE;
     this.maxE = maxE;
-    this.count = count;
+    this.expectedCount = count;
   }
 
   /**
@@ -35,11 +44,19 @@ public class Bin {
    */
   @Override
   public String toString() {
-    return "Bin [minE=" + minE + ", maxE=" + maxE + ", count=" + count + "]";
+    return "Bin [minE=" + minE + ", maxE=" + maxE + ", expectedCount=" + expectedCount + "]";
   }
 
   public boolean inRange(double lower, double upper) {
     if (this.minE >= lower && this.maxE < upper) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public boolean contains(double dataPoint) {
+    if (this.minE <= dataPoint && this.maxE > dataPoint) {
       return true;
     } else {
       return false;
