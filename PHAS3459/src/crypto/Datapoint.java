@@ -20,5 +20,23 @@ public class Datapoint {
 		s.close();
 		return dp;
 	}
+	
+	public static String parseNames(String line){
+		String name = "";
+		Scanner s = new Scanner(line);
+		if(s.hasNext()){
+			name = s.next();
+		}
+		s.close();
+		return name;
+	}
+
+
+	@Override
+	public String toString() {
+		return "[symbol=" + symbol + ", price=" + price + "]";
+	}
+	
+	
 
 }
