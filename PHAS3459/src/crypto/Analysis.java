@@ -1,8 +1,12 @@
 package crypto;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -31,6 +35,7 @@ public class Analysis {
 			String name = Datapoint.parseNames(line);
 			names.add(name);
 		}
+		br.close();
 		return names;
 	}
 	
@@ -49,6 +54,36 @@ public class Analysis {
 		}
 		return coins;
 	}
+	
+	public static void getXPrices(ArrayList<Coin> coinlist) throws IOException {
+		System.out.println("Input x:");
+		Scanner in = new Scanner(System.in);
+		int x = in.nextInt();
+		in.close();
+		File outputfile = new File(System.getProperty("user.home")+"/crypto_output_" + x + ".txt");
+	    FileWriter fw = new FileWriter(outputfile);
+		for( Coin c: coinlist) {
+			//System.out.print(c.getSymbol() + " ");
+			fw.write(c.getSymbol() + "\t");
+			
+			if ( x <= (c.getPricelist().size()) ) {
+				for( int i = 0; i < x; i++) {
+					//System.out.print(c.getPricelist().get(i) + " ");
+					fw.write(c.getPricelist().get(i) + "\t");
+				}
+			}
+			else {
+				for ( int j = 0; j < c.getPricelist().size(); j++) {
+					//System.out.print(c.getPricelist().get(j) + " ");
+					fw.write(c.getPricelist().get(j) + "\t");
+				}
+			}
+			//System.out.println("");
+			fw.write(System.lineSeparator());
+		}
+		fw.close();
+		System.out.println("Saved output to " + System.getProperty("user.home")+"/crypto_output_" + x + ".txt");
+	}
 
 	
 
@@ -56,14 +91,21 @@ public class Analysis {
 
 		ArrayList<String> names = new ArrayList<String>();
 		ArrayList<Datapoint> data = new ArrayList<Datapoint>();
+		
 		try {
-			data = dataFromFile("C:\\Users\\James\\Downloads\\output.txt");
-			names = getNames("C:\\Users\\James\\Downloads\\names.txt");
+			data = dataFromFile(System.getProperty("user.home") + "/output.txt");
+			names = getNames(System.getProperty("user.home") + "/names.txt");
+			ArrayList<Coin> coinlist = makeCoinList(data, names);
+			getXPrices(coinlist);
+			
 		} catch (IOException e) {
 			System.out.println(e);
 		}
-		ArrayList<Coin> coinlist = makeCoinList(data, names);
-		System.out.println(coinlist.get(1));
+		
+		
+		
+
+		
 		
 		
 		
