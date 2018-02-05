@@ -60,7 +60,7 @@ public class Analysis {
 		Scanner in = new Scanner(System.in);
 		int x = in.nextInt();
 		in.close();
-		File outputfile = new File(System.getProperty("user.home")+"/crypto_output_" + x + ".txt");
+		File outputfile = new File(System.getProperty("user.home")+"/crypto_output_price_" + x + ".txt");
 	    FileWriter fw = new FileWriter(outputfile);
 		for( Coin c: coinlist) {
 			//System.out.print(c.getSymbol() + " ");
@@ -82,7 +82,37 @@ public class Analysis {
 			fw.write(System.lineSeparator());
 		}
 		fw.close();
-		System.out.println("Saved output to " + System.getProperty("user.home")+"/crypto_output_" + x + ".txt");
+		System.out.println("Saved output to " + System.getProperty("user.home")+"/crypto_output_price" + x + ".txt");
+	}
+	
+	public static void getXReturns(ArrayList<Coin> coinlist) throws IOException {
+		System.out.println("Input x:");
+		Scanner in = new Scanner(System.in);
+		int x = in.nextInt();
+		in.close();
+		File outputfile = new File(System.getProperty("user.home")+"/crypto_output_return_" + x + ".txt");
+	    FileWriter fw = new FileWriter(outputfile);
+		for( Coin c: coinlist) {
+			//System.out.print(c.getSymbol() + " ");
+			fw.write(c.getSymbol() + "\t");
+			
+			if ( x <= (c.getPricelist().size()) ) {
+				for( int i = 0; i < x; i++) {
+					//System.out.print(c.getPricelist().get(i) + " ");
+					fw.write( ((c.getPricelist().get(i) - c.getPricelist().get(0))/c.getPricelist().get(0)) + "\t");
+				}
+			}
+			else {
+				for ( int j = 0; j < c.getPricelist().size(); j++) {
+					//System.out.print(c.getPricelist().get(j) + " ");
+					fw.write( ((c.getPricelist().get(j) - c.getPricelist().get(0))/c.getPricelist().get(0)) + "\t");
+				}
+			}
+			//System.out.println("");
+			fw.write(System.lineSeparator());
+		}
+		fw.close();
+		System.out.println("Saved output to " + System.getProperty("user.home")+"/crypto_output_return_" + x + ".txt");
 	}
 
 	
@@ -96,7 +126,7 @@ public class Analysis {
 			data = dataFromFile(System.getProperty("user.home") + "/output.txt");
 			names = getNames(System.getProperty("user.home") + "/names.txt");
 			ArrayList<Coin> coinlist = makeCoinList(data, names);
-			getXPrices(coinlist);
+			getXReturns(coinlist);
 			
 		} catch (IOException e) {
 			System.out.println(e);
