@@ -33,6 +33,22 @@ public class Analysis {
 		}
 		return names;
 	}
+	
+	public static ArrayList<Coin> makeCoinList(ArrayList<Datapoint> data, ArrayList<String> names){
+		ArrayList<Coin> coins = new ArrayList<Coin>();
+		for ( String name: names) {
+			Coin coin = new Coin(name);
+			ArrayList<Double> prices = new ArrayList<Double>();
+			for ( Datapoint d: data) {
+				if (coin.getSymbol().equals(d.getSymbol())) {
+					prices.add(d.getPrice());
+				}
+			}
+			coin.setPricelist(prices);
+			coins.add(coin);
+		}
+		return coins;
+	}
 
 	
 
@@ -46,11 +62,11 @@ public class Analysis {
 		} catch (IOException e) {
 			System.out.println(e);
 		}
-		for( Datapoint d: data) {
-			//System.out.println(d);
-		}
+		ArrayList<Coin> coinlist = makeCoinList(data, names);
+		System.out.println(coinlist.get(1));
 		
-		//System.out.println(names);
+		
+		
 
 	}
 

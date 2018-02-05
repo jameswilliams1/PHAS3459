@@ -36,6 +36,18 @@ public class Datapoint {
 	public String toString() {
 		return "[symbol=" + symbol + ", price=" + price + "]";
 	}
+
+
+	public String getSymbol() {
+		return symbol;
+	}
+
+
+	public Double getPrice() {
+		return price;
+	}
+	
+	
 	
 	
 
